@@ -1,0 +1,35 @@
+{
+  "name": "qa-postman-audit",
+  "version": "1.0.0",
+  "description": "Professional QA tool to audit Postman collections and generate reports for CI/CD",
+  "main": "dist/index.js",
+  "bin": {
+    "qa-postman-audit": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "lint": "node -e \"console.log('Add ESLint if you want (optional).')\""
+  },
+  "keywords": [
+    "qa",
+    "postman",
+    "api-testing",
+    "audit",
+    "ci",
+    "testing"
+  ],
+  "author": "Agust\u00edn Cabral",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
