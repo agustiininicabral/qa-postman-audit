@@ -7,6 +7,9 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -16,10 +19,13 @@ jobs:
           node-version: "20"
 
       - name: Install
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
+
+      - name: Run unit tests
+        run: npm test
 
       - name: Run audit (example)
         run: node dist/index.js --collection examples/sample-collection.json --out qa-audit-report

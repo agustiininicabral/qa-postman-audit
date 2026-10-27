@@ -10,7 +10,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "lint": "node -e \"console.log('Add ESLint if you want (optional).')\""
+    "test": "node --test tests/*.test.cjs"
   },
   "keywords": [
     "qa",
@@ -20,7 +20,7 @@
     "ci",
     "testing"
   ],
-  "author": "Agust\u00edn Cabral",
+  "author": "Agustín Cabral",
   "license": "MIT",
   "dependencies": {
     "ajv": "^8.17.1",
