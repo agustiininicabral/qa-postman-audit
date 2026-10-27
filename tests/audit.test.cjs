@@ -61,6 +61,7 @@ test("builds environment maps from valid entries and ignores malformed values", 
       values: [
         { key: "baseUrl", value: "https://example.test" },
         { key: "empty", value: null },
+        { key: "disabled", value: "ignored", enabled: false },
         { key: 10, value: "ignored" },
         null,
       ],
@@ -124,4 +125,25 @@ test("escapes angle brackets in report content", () => {
   assert.ok(html.includes("&lt;sample&gt;"));
   assert.ok(html.includes("&lt;sample finding&gt;"));
   assert.ok(!html.includes("<sample finding>"));
+});
+
+test("treats an explicitly supplied empty environment as provided", () => {
+  const result = runAudit(sampleCollection, { values: [] });
+
+  assert.ok(result.findings.some((finding) => finding.ruleId === "ENV_VAR_MISSING"));
+  assert.ok(!result.findings.some((finding) => finding.ruleId === "ENV_NOT_PROVIDED"));
+});
+
+test("treats disabled environment variables as missing", () => {
+  const result = runAudit(sampleCollection, {
+    values: [{ key: "baseUrl", value: "https://example.test", enabled: false }],
+  });
+
+  assert.ok(
+    result.findings.some(
+      (finding) =>
+        finding.ruleId === "ENV_VAR_MISSING" &&
+        finding.message.includes("baseUrl"),
+    ),
+  );
 });
