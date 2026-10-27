@@ -24,7 +24,9 @@ export function buildEnvMap(envJson: any | null): EnvVarMap {
   if (!envJson || !Array.isArray(envJson.values)) return map;
 
   for (const v of envJson.values) {
-    if (v && typeof v.key === "string") map[v.key] = String(v.value ?? "");
+    if (v && typeof v.key === "string" && v.enabled !== false) {
+      map[v.key] = String(v.value ?? "");
+    }
   }
   return map;
 }
@@ -67,7 +69,11 @@ export function extractVarsFromString(input: string): string[] {
   return [...new Set(vars)];
 }
 
-export function auditCollection(collection: any, envMap: EnvVarMap): Finding[] {
+export function auditCollection(
+  collection: any,
+  envMap: EnvVarMap,
+  envProvided = Object.keys(envMap).length > 0,
+): Finding[] {
   const findings: Finding[] = [];
 
   // Rule: basic Postman v2.1-ish shape
@@ -111,7 +117,6 @@ export function auditCollection(collection: any, envMap: EnvVarMap): Finding[] {
   }
 
   // Rule: variable references must exist in env (if env provided)
-  const envProvided = Object.keys(envMap).length > 0;
   if (envProvided) {
     const allVars: Set<string> = new Set();
     const asText = JSON.stringify(collection);

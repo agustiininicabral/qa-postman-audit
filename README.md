@@ -9,7 +9,8 @@ A TypeScript command-line tool that statically audits exported Postman collectio
 - Minimum collection structure: `info` and `item`.
 - Missing collection schema and collection name.
 - Requests without a non-empty Postman test script.
-- Variables referenced in the collection but missing from a supplied environment.
+- Variables referenced in the collection but missing or disabled in a supplied environment.
+- An explicitly supplied empty environment is still audited; it is not treated as if no environment were provided.
 - Empty or unusually short request names.
 - Request counts and nested item paths for findings.
 

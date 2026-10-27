@@ -39,7 +39,7 @@ export function runAudit(collectionJson: any, envJson: any | null): AuditResult 
   }
 
   const envMap = buildEnvMap(envJson);
-  findings.push(...auditCollection(collectionJson, envMap));
+  findings.push(...auditCollection(collectionJson, envMap, envJson !== null && envJson !== undefined));
 
   const requestCount = countRequests(collectionJson);
 
